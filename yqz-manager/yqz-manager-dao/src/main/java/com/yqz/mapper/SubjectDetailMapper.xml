@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yqz.mapper.SubjectDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.yqz.pojo.SubjectDetail" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="subject_id" property="subjectId" jdbcType="BIGINT" />
+    <result column="detail_title" property="detailTitle" jdbcType="VARCHAR" />
+    <result column="detail_directors" property="detailDirectors" jdbcType="VARCHAR" />
+    <result column="detail_writers" property="detailWriters" jdbcType="VARCHAR" />
+    <result column="detail_actors" property="detailActors" jdbcType="VARCHAR" />
+    <result column="detail_release_year" property="detailReleaseYear" jdbcType="VARCHAR" />
+    <result column="detail_duration" property="detailDuration" jdbcType="VARCHAR" />
+    <result column="detail_region" property="detailRegion" jdbcType="VARCHAR" />
+    <result column="detail_languages" property="detailLanguages" jdbcType="VARCHAR" />
+    <result column="detail_types" property="detailTypes" jdbcType="VARCHAR" />
+    <result column="detail_comment_num" property="detailCommentNum" jdbcType="BIGINT" />
+    <result column="detail_alias_name" property="detailAliasName" jdbcType="VARCHAR" />
+    <result column="detail_star" property="detailStar" jdbcType="REAL" />
+    <result column="detail_star_proportion" property="detailStarProportion" jdbcType="VARCHAR" />
+    <result column="detail_better_than" property="detailBetterThan" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.yqz.pojo.SubjectDetail" extends="BaseResultMap" >
+    <result column="detail_introduce" property="detailIntroduce" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, subject_id, detail_title, detail_directors, detail_writers, detail_actors, detail_release_year, 
+    detail_duration, detail_region, detail_languages, detail_types, detail_comment_num, 
+    detail_alias_name, detail_star, detail_star_proportion, detail_better_than, create_date, 
+    update_date
+  </sql>
+  <sql id="Blob_Column_List" >
+    detail_introduce
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.yqz.pojo.SubjectDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from subject_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yqz.pojo.SubjectDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from subject_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from subject_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from subject_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yqz.pojo.SubjectDetailExample" >
+    delete from subject_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yqz.pojo.SubjectDetail" >
+    insert into subject_detail (id, subject_id, detail_title, 
+      detail_directors, detail_writers, detail_actors, 
+      detail_release_year, detail_duration, detail_region, 
+      detail_languages, detail_types, detail_comment_num, 
+      detail_alias_name, detail_star, detail_star_proportion, 
+      detail_better_than, create_date, update_date, 
+      detail_introduce)
+    values (#{id,jdbcType=BIGINT}, #{subjectId,jdbcType=BIGINT}, #{detailTitle,jdbcType=VARCHAR}, 
+      #{detailDirectors,jdbcType=VARCHAR}, #{detailWriters,jdbcType=VARCHAR}, #{detailActors,jdbcType=VARCHAR}, 
+      #{detailReleaseYear,jdbcType=VARCHAR}, #{detailDuration,jdbcType=VARCHAR}, #{detailRegion,jdbcType=VARCHAR}, 
+      #{detailLanguages,jdbcType=VARCHAR}, #{detailTypes,jdbcType=VARCHAR}, #{detailCommentNum,jdbcType=BIGINT}, 
+      #{detailAliasName,jdbcType=VARCHAR}, #{detailStar,jdbcType=REAL}, #{detailStarProportion,jdbcType=VARCHAR}, 
+      #{detailBetterThan,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{detailIntroduce,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yqz.pojo.SubjectDetail" >
+    insert into subject_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="subjectId != null" >
+        subject_id,
+      </if>
+      <if test="detailTitle != null" >
+        detail_title,
+      </if>
+      <if test="detailDirectors != null" >
+        detail_directors,
+      </if>
+      <if test="detailWriters != null" >
+        detail_writers,
+      </if>
+      <if test="detailActors != null" >
+        detail_actors,
+      </if>
+      <if test="detailReleaseYear != null" >
+        detail_release_year,
+      </if>
+      <if test="detailDuration != null" >
+        detail_duration,
+      </if>
+      <if test="detailRegion != null" >
+        detail_region,
+      </if>
+      <if test="detailLanguages != null" >
+        detail_languages,
+      </if>
+      <if test="detailTypes != null" >
+        detail_types,
+      </if>
+      <if test="detailCommentNum != null" >
+        detail_comment_num,
+      </if>
+      <if test="detailAliasName != null" >
+        detail_alias_name,
+      </if>
+      <if test="detailStar != null" >
+        detail_star,
+      </if>
+      <if test="detailStarProportion != null" >
+        detail_star_proportion,
+      </if>
+      <if test="detailBetterThan != null" >
+        detail_better_than,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="detailIntroduce != null" >
+        detail_introduce,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="subjectId != null" >
+        #{subjectId,jdbcType=BIGINT},
+      </if>
+      <if test="detailTitle != null" >
+        #{detailTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="detailDirectors != null" >
+        #{detailDirectors,jdbcType=VARCHAR},
+      </if>
+      <if test="detailWriters != null" >
+        #{detailWriters,jdbcType=VARCHAR},
+      </if>
+      <if test="detailActors != null" >
+        #{detailActors,jdbcType=VARCHAR},
+      </if>
+      <if test="detailReleaseYear != null" >
+        #{detailReleaseYear,jdbcType=VARCHAR},
+      </if>
+      <if test="detailDuration != null" >
+        #{detailDuration,jdbcType=VARCHAR},
+      </if>
+      <if test="detailRegion != null" >
+        #{detailRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="detailLanguages != null" >
+        #{detailLanguages,jdbcType=VARCHAR},
+      </if>
+      <if test="detailTypes != null" >
+        #{detailTypes,jdbcType=VARCHAR},
+      </if>
+      <if test="detailCommentNum != null" >
+        #{detailCommentNum,jdbcType=BIGINT},
+      </if>
+      <if test="detailAliasName != null" >
+        #{detailAliasName,jdbcType=VARCHAR},
+      </if>
+      <if test="detailStar != null" >
+        #{detailStar,jdbcType=REAL},
+      </if>
+      <if test="detailStarProportion != null" >
+        #{detailStarProportion,jdbcType=VARCHAR},
+      </if>
+      <if test="detailBetterThan != null" >
+        #{detailBetterThan,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="detailIntroduce != null" >
+        #{detailIntroduce,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yqz.pojo.SubjectDetailExample" resultType="java.lang.Integer" >
+    select count(*) from subject_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update subject_detail
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.subjectId != null" >
+        subject_id = #{record.subjectId,jdbcType=BIGINT},
+      </if>
+      <if test="record.detailTitle != null" >
+        detail_title = #{record.detailTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detailDirectors != null" >
+        detail_directors = #{record.detailDirectors,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detailWriters != null" >
+        detail_writers = #{record.detailWriters,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detailActors != null" >
+        detail_actors = #{record.detailActors,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detailReleaseYear != null" >
+        detail_release_year = #{record.detailReleaseYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detailDuration != null" >
+        detail_duration = #{record.detailDuration,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detailRegion != null" >
+        detail_region = #{record.detailRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detailLanguages != null" >
+        detail_languages = #{record.detailLanguages,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detailTypes != null" >
+        detail_types = #{record.detailTypes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detailCommentNum != null" >
+        detail_comment_num = #{record.detailCommentNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.detailAliasName != null" >
+        detail_alias_name = #{record.detailAliasName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detailStar != null" >
+        detail_star = #{record.detailStar,jdbcType=REAL},
+      </if>
+      <if test="record.detailStarProportion != null" >
+        detail_star_proportion = #{record.detailStarProportion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detailBetterThan != null" >
+        detail_better_than = #{record.detailBetterThan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null" >
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.detailIntroduce != null" >
+        detail_introduce = #{record.detailIntroduce,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update subject_detail
+    set id = #{record.id,jdbcType=BIGINT},
+      subject_id = #{record.subjectId,jdbcType=BIGINT},
+      detail_title = #{record.detailTitle,jdbcType=VARCHAR},
+      detail_directors = #{record.detailDirectors,jdbcType=VARCHAR},
+      detail_writers = #{record.detailWriters,jdbcType=VARCHAR},
+      detail_actors = #{record.detailActors,jdbcType=VARCHAR},
+      detail_release_year = #{record.detailReleaseYear,jdbcType=VARCHAR},
+      detail_duration = #{record.detailDuration,jdbcType=VARCHAR},
+      detail_region = #{record.detailRegion,jdbcType=VARCHAR},
+      detail_languages = #{record.detailLanguages,jdbcType=VARCHAR},
+      detail_types = #{record.detailTypes,jdbcType=VARCHAR},
+      detail_comment_num = #{record.detailCommentNum,jdbcType=BIGINT},
+      detail_alias_name = #{record.detailAliasName,jdbcType=VARCHAR},
+      detail_star = #{record.detailStar,jdbcType=REAL},
+      detail_star_proportion = #{record.detailStarProportion,jdbcType=VARCHAR},
+      detail_better_than = #{record.detailBetterThan,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      detail_introduce = #{record.detailIntroduce,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update subject_detail
+    set id = #{record.id,jdbcType=BIGINT},
+      subject_id = #{record.subjectId,jdbcType=BIGINT},
+      detail_title = #{record.detailTitle,jdbcType=VARCHAR},
+      detail_directors = #{record.detailDirectors,jdbcType=VARCHAR},
+      detail_writers = #{record.detailWriters,jdbcType=VARCHAR},
+      detail_actors = #{record.detailActors,jdbcType=VARCHAR},
+      detail_release_year = #{record.detailReleaseYear,jdbcType=VARCHAR},
+      detail_duration = #{record.detailDuration,jdbcType=VARCHAR},
+      detail_region = #{record.detailRegion,jdbcType=VARCHAR},
+      detail_languages = #{record.detailLanguages,jdbcType=VARCHAR},
+      detail_types = #{record.detailTypes,jdbcType=VARCHAR},
+      detail_comment_num = #{record.detailCommentNum,jdbcType=BIGINT},
+      detail_alias_name = #{record.detailAliasName,jdbcType=VARCHAR},
+      detail_star = #{record.detailStar,jdbcType=REAL},
+      detail_star_proportion = #{record.detailStarProportion,jdbcType=VARCHAR},
+      detail_better_than = #{record.detailBetterThan,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yqz.pojo.SubjectDetail" >
+    update subject_detail
+    <set >
+      <if test="subjectId != null" >
+        subject_id = #{subjectId,jdbcType=BIGINT},
+      </if>
+      <if test="detailTitle != null" >
+        detail_title = #{detailTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="detailDirectors != null" >
+        detail_directors = #{detailDirectors,jdbcType=VARCHAR},
+      </if>
+      <if test="detailWriters != null" >
+        detail_writers = #{detailWriters,jdbcType=VARCHAR},
+      </if>
+      <if test="detailActors != null" >
+        detail_actors = #{detailActors,jdbcType=VARCHAR},
+      </if>
+      <if test="detailReleaseYear != null" >
+        detail_release_year = #{detailReleaseYear,jdbcType=VARCHAR},
+      </if>
+      <if test="detailDuration != null" >
+        detail_duration = #{detailDuration,jdbcType=VARCHAR},
+      </if>
+      <if test="detailRegion != null" >
+        detail_region = #{detailRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="detailLanguages != null" >
+        detail_languages = #{detailLanguages,jdbcType=VARCHAR},
+      </if>
+      <if test="detailTypes != null" >
+        detail_types = #{detailTypes,jdbcType=VARCHAR},
+      </if>
+      <if test="detailCommentNum != null" >
+        detail_comment_num = #{detailCommentNum,jdbcType=BIGINT},
+      </if>
+      <if test="detailAliasName != null" >
+        detail_alias_name = #{detailAliasName,jdbcType=VARCHAR},
+      </if>
+      <if test="detailStar != null" >
+        detail_star = #{detailStar,jdbcType=REAL},
+      </if>
+      <if test="detailStarProportion != null" >
+        detail_star_proportion = #{detailStarProportion,jdbcType=VARCHAR},
+      </if>
+      <if test="detailBetterThan != null" >
+        detail_better_than = #{detailBetterThan,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="detailIntroduce != null" >
+        detail_introduce = #{detailIntroduce,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.yqz.pojo.SubjectDetail" >
+    update subject_detail
+    set subject_id = #{subjectId,jdbcType=BIGINT},
+      detail_title = #{detailTitle,jdbcType=VARCHAR},
+      detail_directors = #{detailDirectors,jdbcType=VARCHAR},
+      detail_writers = #{detailWriters,jdbcType=VARCHAR},
+      detail_actors = #{detailActors,jdbcType=VARCHAR},
+      detail_release_year = #{detailReleaseYear,jdbcType=VARCHAR},
+      detail_duration = #{detailDuration,jdbcType=VARCHAR},
+      detail_region = #{detailRegion,jdbcType=VARCHAR},
+      detail_languages = #{detailLanguages,jdbcType=VARCHAR},
+      detail_types = #{detailTypes,jdbcType=VARCHAR},
+      detail_comment_num = #{detailCommentNum,jdbcType=BIGINT},
+      detail_alias_name = #{detailAliasName,jdbcType=VARCHAR},
+      detail_star = #{detailStar,jdbcType=REAL},
+      detail_star_proportion = #{detailStarProportion,jdbcType=VARCHAR},
+      detail_better_than = #{detailBetterThan,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      detail_introduce = #{detailIntroduce,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yqz.pojo.SubjectDetail" >
+    update subject_detail
+    set subject_id = #{subjectId,jdbcType=BIGINT},
+      detail_title = #{detailTitle,jdbcType=VARCHAR},
+      detail_directors = #{detailDirectors,jdbcType=VARCHAR},
+      detail_writers = #{detailWriters,jdbcType=VARCHAR},
+      detail_actors = #{detailActors,jdbcType=VARCHAR},
+      detail_release_year = #{detailReleaseYear,jdbcType=VARCHAR},
+      detail_duration = #{detailDuration,jdbcType=VARCHAR},
+      detail_region = #{detailRegion,jdbcType=VARCHAR},
+      detail_languages = #{detailLanguages,jdbcType=VARCHAR},
+      detail_types = #{detailTypes,jdbcType=VARCHAR},
+      detail_comment_num = #{detailCommentNum,jdbcType=BIGINT},
+      detail_alias_name = #{detailAliasName,jdbcType=VARCHAR},
+      detail_star = #{detailStar,jdbcType=REAL},
+      detail_star_proportion = #{detailStarProportion,jdbcType=VARCHAR},
+      detail_better_than = #{detailBetterThan,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

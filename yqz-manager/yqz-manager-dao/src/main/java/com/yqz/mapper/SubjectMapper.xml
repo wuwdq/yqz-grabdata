@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yqz.mapper.SubjectMapper" >
+  <resultMap id="BaseResultMap" type="com.yqz.pojo.Subject" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="subject_title" property="subjectTitle" jdbcType="VARCHAR" />
+    <result column="subject_cover" property="subjectCover" jdbcType="VARCHAR" />
+    <result column="subject_type" property="subjectType" jdbcType="VARCHAR" />
+    <result column="subject_tag" property="subjectTag" jdbcType="VARCHAR" />
+    <result column="subject_rate" property="subjectRate" jdbcType="VARCHAR" />
+    <result column="subject_is_new" property="subjectIsNew" jdbcType="INTEGER" />
+    <result column="subject_playable" property="subjectPlayable" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, subject_title, subject_cover, subject_type, subject_tag, subject_rate, subject_is_new, 
+    subject_playable, create_date, update_date
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yqz.pojo.SubjectExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from subject
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from subject
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from subject
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yqz.pojo.SubjectExample" >
+    delete from subject
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yqz.pojo.Subject" >
+    insert into subject (id, subject_title, subject_cover, 
+      subject_type, subject_tag, subject_rate, 
+      subject_is_new, subject_playable, create_date, 
+      update_date)
+    values (#{id,jdbcType=BIGINT}, #{subjectTitle,jdbcType=VARCHAR}, #{subjectCover,jdbcType=VARCHAR}, 
+      #{subjectType,jdbcType=VARCHAR}, #{subjectTag,jdbcType=VARCHAR}, #{subjectRate,jdbcType=VARCHAR}, 
+      #{subjectIsNew,jdbcType=INTEGER}, #{subjectPlayable,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yqz.pojo.Subject" >
+    insert into subject
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="subjectTitle != null" >
+        subject_title,
+      </if>
+      <if test="subjectCover != null" >
+        subject_cover,
+      </if>
+      <if test="subjectType != null" >
+        subject_type,
+      </if>
+      <if test="subjectTag != null" >
+        subject_tag,
+      </if>
+      <if test="subjectRate != null" >
+        subject_rate,
+      </if>
+      <if test="subjectIsNew != null" >
+        subject_is_new,
+      </if>
+      <if test="subjectPlayable != null" >
+        subject_playable,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="subjectTitle != null" >
+        #{subjectTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectCover != null" >
+        #{subjectCover,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectType != null" >
+        #{subjectType,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectTag != null" >
+        #{subjectTag,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectRate != null" >
+        #{subjectRate,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectIsNew != null" >
+        #{subjectIsNew,jdbcType=INTEGER},
+      </if>
+      <if test="subjectPlayable != null" >
+        #{subjectPlayable,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yqz.pojo.SubjectExample" resultType="java.lang.Integer" >
+    select count(*) from subject
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update subject
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.subjectTitle != null" >
+        subject_title = #{record.subjectTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectCover != null" >
+        subject_cover = #{record.subjectCover,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectType != null" >
+        subject_type = #{record.subjectType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectTag != null" >
+        subject_tag = #{record.subjectTag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectRate != null" >
+        subject_rate = #{record.subjectRate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectIsNew != null" >
+        subject_is_new = #{record.subjectIsNew,jdbcType=INTEGER},
+      </if>
+      <if test="record.subjectPlayable != null" >
+        subject_playable = #{record.subjectPlayable,jdbcType=INTEGER},
+      </if>
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null" >
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update subject
+    set id = #{record.id,jdbcType=BIGINT},
+      subject_title = #{record.subjectTitle,jdbcType=VARCHAR},
+      subject_cover = #{record.subjectCover,jdbcType=VARCHAR},
+      subject_type = #{record.subjectType,jdbcType=VARCHAR},
+      subject_tag = #{record.subjectTag,jdbcType=VARCHAR},
+      subject_rate = #{record.subjectRate,jdbcType=VARCHAR},
+      subject_is_new = #{record.subjectIsNew,jdbcType=INTEGER},
+      subject_playable = #{record.subjectPlayable,jdbcType=INTEGER},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yqz.pojo.Subject" >
+    update subject
+    <set >
+      <if test="subjectTitle != null" >
+        subject_title = #{subjectTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectCover != null" >
+        subject_cover = #{subjectCover,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectType != null" >
+        subject_type = #{subjectType,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectTag != null" >
+        subject_tag = #{subjectTag,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectRate != null" >
+        subject_rate = #{subjectRate,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectIsNew != null" >
+        subject_is_new = #{subjectIsNew,jdbcType=INTEGER},
+      </if>
+      <if test="subjectPlayable != null" >
+        subject_playable = #{subjectPlayable,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yqz.pojo.Subject" >
+    update subject
+    set subject_title = #{subjectTitle,jdbcType=VARCHAR},
+      subject_cover = #{subjectCover,jdbcType=VARCHAR},
+      subject_type = #{subjectType,jdbcType=VARCHAR},
+      subject_tag = #{subjectTag,jdbcType=VARCHAR},
+      subject_rate = #{subjectRate,jdbcType=VARCHAR},
+      subject_is_new = #{subjectIsNew,jdbcType=INTEGER},
+      subject_playable = #{subjectPlayable,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectCount" resultType="java.lang.Integer">
+    select count(1) from subject
+  </select>
+</mapper>

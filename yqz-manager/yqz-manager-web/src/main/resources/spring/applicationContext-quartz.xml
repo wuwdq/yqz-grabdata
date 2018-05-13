@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+	<description>爬虫任务</description>
+	<!--配置调度的任务对应bean的id和自定义class -->
+	<bean id="dataParseImportQuartz" class="com.yqz.schedule.ParseDataJob" />
+
+	<!-- 配置调度任务对应的bean的id和执行的方法,作业不并发调度 -->
+	<bean id="dataParseImportDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="dataParseImportQuartz" />
+		<property name="targetMethod" value="excute" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<!-- 配置调度任务执行的触发的时间  -->
+	<bean id="dataParseImportTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="dataParseImportDetail" />
+		<property name="cronExpression">
+			<!-- 每天上午8点10点,下午2点和下午4点执行任务调度 -->
+			<value>0 05 02 * * ?</value>
+		</property>
+	</bean>
+
+	<!-- Quartz的调度工厂，调度工厂只能有一个，多个调度任务在list中添加  -->
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<!-- 所有的调度列表 -->
+				<ref bean="dataParseImportTrigger" />
+			</list>
+		</property>
+	</bean> 
+</beans>

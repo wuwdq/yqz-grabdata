@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yqz.mapper.SubjectCommentMapper" >
+  <resultMap id="BaseResultMap" type="com.yqz.pojo.SubjectComment" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="subject_id" property="subjectId" jdbcType="BIGINT" />
+    <result column="comment_people" property="commentPeople" jdbcType="VARCHAR" />
+    <result column="comment_people_picture" property="commentPeoplePicture" jdbcType="VARCHAR" />
+    <result column="comment_time" property="commentTime" jdbcType="TIMESTAMP" />
+    <result column="comment_vote" property="commentVote" jdbcType="INTEGER" />
+    <result column="comment_star" property="commentStar" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.yqz.pojo.SubjectComment" extends="BaseResultMap" >
+    <result column="comment_info" property="commentInfo" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, subject_id, comment_people, comment_people_picture, comment_time, comment_vote, 
+    comment_star, create_date, update_date
+  </sql>
+  <sql id="Blob_Column_List" >
+    comment_info
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.yqz.pojo.SubjectCommentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from subject_comment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yqz.pojo.SubjectCommentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from subject_comment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from subject_comment
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from subject_comment
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yqz.pojo.SubjectCommentExample" >
+    delete from subject_comment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yqz.pojo.SubjectComment" >
+    insert into subject_comment (id, subject_id, comment_people, 
+      comment_people_picture, comment_time, comment_vote, 
+      comment_star, create_date, update_date, 
+      comment_info)
+    values (#{id,jdbcType=BIGINT}, #{subjectId,jdbcType=BIGINT}, #{commentPeople,jdbcType=VARCHAR}, 
+      #{commentPeoplePicture,jdbcType=VARCHAR}, #{commentTime,jdbcType=TIMESTAMP}, #{commentVote,jdbcType=INTEGER}, 
+      #{commentStar,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{commentInfo,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yqz.pojo.SubjectComment" >
+    insert into subject_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="subjectId != null" >
+        subject_id,
+      </if>
+      <if test="commentPeople != null" >
+        comment_people,
+      </if>
+      <if test="commentPeoplePicture != null" >
+        comment_people_picture,
+      </if>
+      <if test="commentTime != null" >
+        comment_time,
+      </if>
+      <if test="commentVote != null" >
+        comment_vote,
+      </if>
+      <if test="commentStar != null" >
+        comment_star,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="commentInfo != null" >
+        comment_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="subjectId != null" >
+        #{subjectId,jdbcType=BIGINT},
+      </if>
+      <if test="commentPeople != null" >
+        #{commentPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="commentPeoplePicture != null" >
+        #{commentPeoplePicture,jdbcType=VARCHAR},
+      </if>
+      <if test="commentTime != null" >
+        #{commentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentVote != null" >
+        #{commentVote,jdbcType=INTEGER},
+      </if>
+      <if test="commentStar != null" >
+        #{commentStar,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentInfo != null" >
+        #{commentInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yqz.pojo.SubjectCommentExample" resultType="java.lang.Integer" >
+    select count(*) from subject_comment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update subject_comment
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.subjectId != null" >
+        subject_id = #{record.subjectId,jdbcType=BIGINT},
+      </if>
+      <if test="record.commentPeople != null" >
+        comment_people = #{record.commentPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commentPeoplePicture != null" >
+        comment_people_picture = #{record.commentPeoplePicture,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commentTime != null" >
+        comment_time = #{record.commentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.commentVote != null" >
+        comment_vote = #{record.commentVote,jdbcType=INTEGER},
+      </if>
+      <if test="record.commentStar != null" >
+        comment_star = #{record.commentStar,jdbcType=INTEGER},
+      </if>
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null" >
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.commentInfo != null" >
+        comment_info = #{record.commentInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update subject_comment
+    set id = #{record.id,jdbcType=BIGINT},
+      subject_id = #{record.subjectId,jdbcType=BIGINT},
+      comment_people = #{record.commentPeople,jdbcType=VARCHAR},
+      comment_people_picture = #{record.commentPeoplePicture,jdbcType=VARCHAR},
+      comment_time = #{record.commentTime,jdbcType=TIMESTAMP},
+      comment_vote = #{record.commentVote,jdbcType=INTEGER},
+      comment_star = #{record.commentStar,jdbcType=INTEGER},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      comment_info = #{record.commentInfo,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update subject_comment
+    set id = #{record.id,jdbcType=BIGINT},
+      subject_id = #{record.subjectId,jdbcType=BIGINT},
+      comment_people = #{record.commentPeople,jdbcType=VARCHAR},
+      comment_people_picture = #{record.commentPeoplePicture,jdbcType=VARCHAR},
+      comment_time = #{record.commentTime,jdbcType=TIMESTAMP},
+      comment_vote = #{record.commentVote,jdbcType=INTEGER},
+      comment_star = #{record.commentStar,jdbcType=INTEGER},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yqz.pojo.SubjectComment" >
+    update subject_comment
+    <set >
+      <if test="subjectId != null" >
+        subject_id = #{subjectId,jdbcType=BIGINT},
+      </if>
+      <if test="commentPeople != null" >
+        comment_people = #{commentPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="commentPeoplePicture != null" >
+        comment_people_picture = #{commentPeoplePicture,jdbcType=VARCHAR},
+      </if>
+      <if test="commentTime != null" >
+        comment_time = #{commentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentVote != null" >
+        comment_vote = #{commentVote,jdbcType=INTEGER},
+      </if>
+      <if test="commentStar != null" >
+        comment_star = #{commentStar,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentInfo != null" >
+        comment_info = #{commentInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.yqz.pojo.SubjectComment" >
+    update subject_comment
+    set subject_id = #{subjectId,jdbcType=BIGINT},
+      comment_people = #{commentPeople,jdbcType=VARCHAR},
+      comment_people_picture = #{commentPeoplePicture,jdbcType=VARCHAR},
+      comment_time = #{commentTime,jdbcType=TIMESTAMP},
+      comment_vote = #{commentVote,jdbcType=INTEGER},
+      comment_star = #{commentStar,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      comment_info = #{commentInfo,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yqz.pojo.SubjectComment" >
+    update subject_comment
+    set subject_id = #{subjectId,jdbcType=BIGINT},
+      comment_people = #{commentPeople,jdbcType=VARCHAR},
+      comment_people_picture = #{commentPeoplePicture,jdbcType=VARCHAR},
+      comment_time = #{commentTime,jdbcType=TIMESTAMP},
+      comment_vote = #{commentVote,jdbcType=INTEGER},
+      comment_star = #{commentStar,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectBySortAndLimit" parameterType="java.util.HashMap"  resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from subject_comment
+    where 
+    subject_id = #{subjectId}
+    <if test="sort != null" >
+      order by ${sort}  ${order} 
+    </if>
+    limit ${size}
+  </select>
+</mapper>
